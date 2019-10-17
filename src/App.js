@@ -1,26 +1,62 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import uuidv1 from 'uuid/v1';
+
 import ImageList from './react/ImageList';
+import Form from './react/Form';
 
+import './App.css';
 
-const images = [
+// https://images.unsplash.com/photo-1516233758813-a38d024919c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60
+// https://images.unsplash.com/photo-1506031836469-0c356b620b54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60
+// https://images.unsplash.com/photo-1518467166778-b88f373ffec7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60
+// https://images.unsplash.com/photo-1506506447188-78e2a1051d9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60
+
+const initialImages = [
   {
-    src: 'https://geo.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F16.2Ff184c633-9472-42ea-8f8f-c6f2f0f0edc7.2Ejpeg/1150x660/background-color/ffffff/quality/70/wildlife-photographer-of-the-year-les-plus-belles-photos-animalieres-de-lannee-2019-devoilees.jpg',
-    title: 'Wolf and marmot'
+    id: uuidv1(),
+    url: 'https://images.unsplash.com/photo-1536146021566-627ce3c4d813?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    title: 'Selective focus photography of brow monkey sitting on brick pavement'
   },
   {
-    src: 'https://geo.img.pmdstatic.net/pad/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F16.2F1ee113a9-13fb-49d0-99fb-9ed1414b91df.2Ejpeg/650x433/quality/80/1ee113a9-13fb-49d0-99fb-9ed1414b91df-jpeg.jpeg',
-    title: 'Iridescent calmar'
+    id: uuidv1(),
+    url: 'https://images.unsplash.com/photo-1520552159191-e28a1d9f0d7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    title: 'Blue and green bird on top of brown branch during daytime'
+  },
+  {
+    id: uuidv1(),
+    url: 'https://images.unsplash.com/photo-1535941339077-2dd1c7963098?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    title: 'Elephant on grass during daytime'
   }
 ];
 
 function App() {
-  // const [images, setImages] = useState([]);
+  const [images, setImages] = useState(initialImages);
+  const [selected, setSelected] = useState({});
+
+  function handleSubmit(image) {
+    function updateImage() {
+      setImages(images.map(img => img.id === image.id ? image : img))
+    }
+
+    function addImage() {
+      setImages([...images, { ...image, id: uuidv1() }])
+    }
+
+    if (image.id) {
+      updateImage();
+    } else {
+      addImage()
+    }
+  }
+
+  function handleDelete(image) {
+    setImages(images.map(img => img.id === image.id ? null : img).filter(Boolean))
+  }
 
   return (
     <div className="App">
-      <ImageList images={images}/>
+      <Form onSubmit={handleSubmit} image={selected}/>
+      <ImageList images={images} onEdit={image => setSelected(image)} onDelete={handleDelete}/>
     </div>
   );
 }

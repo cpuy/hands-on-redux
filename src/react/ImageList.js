@@ -1,13 +1,17 @@
 import React from 'react'
 import Image from './Image';
+import ImageOverlay from './ImageOverlay'
+import './ImageList.css';
 
-function ImageList({ images }) {
+function ImageList({ images, onDelete, onEdit }) {
 
   return (
-    <ul>
+    <ul className="ImageList">
       {images.map(image => {
-        return <li>
-          <Image image={image}/>
+        return <li key={image.id}>
+          <ImageOverlay onDelete={() => onDelete(image)} onEdit={() => onEdit(image)}>
+            <Image image={image}/>
+          </ImageOverlay>
         </li>
       })}
     </ul>

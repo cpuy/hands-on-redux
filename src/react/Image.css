@@ -1,0 +1,12 @@
+.Image {
+  width: min-content;
+}
+
+.Image img {
+  max-width: 30rem;
+  max-height: 30rem;
+}
+
+.Image figcaption {
+  text-align: center;
+}

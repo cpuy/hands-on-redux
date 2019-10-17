@@ -1,0 +1,17 @@
+.ImageOverlay {
+  position: relative;
+}
+
+.ImageOverlay-toolbar {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+}
+
+.ImageOverlay-icon {
+  margin: 0 .5rem;
+}
+
+.ImageOverlay-icon:hover {
+  cursor: pointer;
+}
