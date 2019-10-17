@@ -33,30 +33,32 @@ function App() {
   const [images, setImages] = useState(initialImages);
   const [selected, setSelected] = useState({});
 
-  function handleSubmit(image) {
-    function updateImage() {
-      setImages(images.map(img => img.id === image.id ? image : img))
-    }
-
-    function addImage() {
-      setImages([...images, { ...image, id: uuidv1() }])
-    }
-
-    if (image.id) {
-      updateImage();
-    } else {
-      addImage()
-    }
+  function updateImage(image) {
+    setImages(images.map(img => img.id === image.id ? image : img))
   }
 
-  function handleDelete(image) {
+  function addImage(image) {
+    setImages([...images, { ...image, id: uuidv1() }])
+  }
+
+  function deleteImage(image) {
     setImages(images.map(img => img.id === image.id ? null : img).filter(Boolean))
+  }
+
+  function handleSubmit(image) {
+    if (image.id) {
+      updateImage(image);
+    } else {
+      addImage(image)
+    }
+
+    setSelected({})
   }
 
   return (
     <div className="App">
       <Form onSubmit={handleSubmit} image={selected}/>
-      <ImageList images={images} onEdit={image => setSelected(image)} onDelete={handleDelete}/>
+      <ImageList images={images} onEdit={image => setSelected(image)} onDelete={deleteImage}/>
     </div>
   );
 }

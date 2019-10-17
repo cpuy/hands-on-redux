@@ -11,11 +11,13 @@ function Form({ onSubmit, image }) {
       setTitle(image.title);
       setUrl(image.url)
     }
-  }, [image]);
+  }, [image.title]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit({ ...image, title, url });
+    setTitle('');
+    setUrl('');
   }
 
   return (
